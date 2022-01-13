@@ -8,7 +8,7 @@ from PyPDF2 import PdfFileMerger
 
 def download_image(book, page):
     if "anyflip" in book:
-        url = f"http://online.anyflip.com/uwmxs/bwxh/files/mobile/{page}.jpg"
+        url = f"{book}/files/mobile/{page}.jpg"
     else:
         url = f"https://www.ilkokul1.com/wp-content/uploads/flipbook/{book}/files/mobile/{page}.jpg"
 
@@ -56,7 +56,7 @@ merger.close()
 
 
 for file in pdf_files:
-    if not book_no in file:
+    if not "export" in file:
         os.remove(file)
 
 for file in jpg_files:
