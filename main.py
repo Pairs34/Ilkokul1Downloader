@@ -45,6 +45,7 @@ book_no = input("Kitap no giriniz = ")
 
 page = 1
 while True:
+    print(page)
     result = download_image(book_no, page)
     if not result:
         break
@@ -64,7 +65,8 @@ merger.close()
 
 
 for file in pdf_files:
-    os.remove(file)
+    if not book_no in file:
+        os.remove(file)
 
 for file in jpg_files:
     os.remove(file)
