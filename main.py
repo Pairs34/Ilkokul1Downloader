@@ -1,5 +1,6 @@
 import glob
 import os
+from urllib.parse import urlsplit
 
 import requests
 from PIL import Image
