@@ -7,23 +7,14 @@ from PyPDF2 import PdfFileMerger
 
 
 def download_image(book, page):
-    url = f"https://www.ilkokul1.com/wp-content/uploads/flipbook/{book}/files/mobile/{page}.jpg"
+    if "anyflip" in book:
+        url = f"http://online.anyflip.com/uwmxs/bwxh/files/mobile/{page}.jpg"
+    else:
+        url = f"https://www.ilkokul1.com/wp-content/uploads/flipbook/{book}/files/mobile/{page}.jpg"
 
     payload = {}
     headers = {
-        'authority': 'www.ilkokul1.com',
-        'sec-ch-ua': '"Chromium";v="96", " Not A;Brand";v="99"',
-        'sec-ch-ua-mobile': '?0',
-        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.137 Safari/537.36',
-        'sec-ch-ua-platform': '"Windows"',
-        'accept': 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
-        'sec-fetch-site': 'same-origin',
-        'sec-fetch-mode': 'no-cors',
-        'sec-fetch-dest': 'image',
-        'referer': f'https://www.ilkokul1.com/wp-content/uploads/flipbook/{book}/book.html',
-        'accept-language': 'en-US,en;q=0.5',
-        'dnt': '1',
-        'sec-gpc': '1'
+        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.137 Safari/537.36'
     }
 
     response = requests.request("GET", url, headers=headers, data=payload)
@@ -60,7 +51,7 @@ merger = PdfFileMerger()
 for pdf in pdf_files:
     merger.append(pdf)
 
-merger.write(f"{book_no}.pdf")
+merger.write(f"export.pdf")
 merger.close()
 
 
