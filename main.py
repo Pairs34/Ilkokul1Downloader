@@ -6,8 +6,8 @@ from PIL import Image
 from PyPDF2 import PdfFileMerger
 
 
-def download_image(page):
-    url = f"https://www.ilkokul1.com/wp-content/uploads/flipbook/62/files/mobile/{page}.jpg?210114234309"
+def download_image(book, page):
+    url = f"https://www.ilkokul1.com/wp-content/uploads/flipbook/{book}/files/mobile/{page}.jpg"
 
     payload = {}
     headers = {
@@ -20,7 +20,7 @@ def download_image(page):
         'sec-fetch-site': 'same-origin',
         'sec-fetch-mode': 'no-cors',
         'sec-fetch-dest': 'image',
-        'referer': 'https://www.ilkokul1.com/wp-content/uploads/flipbook/61/book.html',
+        'referer': f'https://www.ilkokul1.com/wp-content/uploads/flipbook/{book}/book.html',
         'accept-language': 'en-US,en;q=0.5',
         'dnt': '1',
         'sec-gpc': '1'
@@ -36,13 +36,20 @@ def download_image(page):
         open_image = Image.open(f'{page}.jpg')
         convert_image = open_image.convert('RGB')
         convert_image.save(f'{page}.pdf')
+        return True
     else:
-        print("Hatalı Link")
+        return False
 
 
-# for i in range(1, 117):
-#     print(i)
-#     download_image(i)
+book_no = input("Kitap no giriniz = ")
+
+page = 1
+while True:
+    result = download_image(book_no, page)
+    if not result:
+        break
+
+    page += 1
 
 
 pdf_files = glob.glob("./*.pdf")
@@ -52,7 +59,7 @@ merger = PdfFileMerger()
 for pdf in pdf_files:
     merger.append(pdf)
 
-merger.write("result.pdf")
+merger.write(f"{book_no}.pdf")
 merger.close()
 
 
